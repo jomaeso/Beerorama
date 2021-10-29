@@ -1,4 +1,4 @@
-package com.josemaeso.beerorama.ui.main
+package com.josemaeso.beerorama.ui.search
 
 import androidx.lifecycle.ViewModel
 
