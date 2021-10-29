@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchBeerFragment">
+
+    <fragment
+        android:id="@+id/searchBeerFragment"
+        android:name="com.josemaeso.beerorama.ui.main.SearchBeerFragment"
+        android:label="search_beer_fragment"
+        tools:layout="@layout/search_beer_fragment" />
+</navigation>
