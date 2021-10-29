@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Beerorama</string>
+    <string name="search_beer_search_hint">Search Beer</string>
 </resources>

@@ -8,24 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.josemaeso.beerorama.R
 
-class MainFragment : Fragment() {
+class SearchBeerFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = SearchBeerFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: SearchBeerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.search_beer_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SearchBeerViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
