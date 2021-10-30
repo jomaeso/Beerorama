@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.search_beer_fragment.*
 
 class SearchBeerFragment : Fragment() {
 
-    private val viewModel: SearchBeerViewModel by viewModels{SearchBeerViewModelFactory((activity?.application as BeeroramaApplication).beerProvider)}
+    private val viewModel: SearchBeerViewModel by viewModels { SearchBeerViewModelFactory((activity?.application as BeeroramaApplication).beerProvider) }
     private val beerAdapter = BeerListAdapter()
 
     override fun onCreateView(
@@ -30,7 +30,7 @@ class SearchBeerFragment : Fragment() {
         rv_beer_list.adapter = beerAdapter
         rv_beer_list.layoutManager = LinearLayoutManager(requireContext())
 
-        sv_search_beer.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        sv_search_beer.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }

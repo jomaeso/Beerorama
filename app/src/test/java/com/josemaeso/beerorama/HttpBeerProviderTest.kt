@@ -70,7 +70,12 @@ class HttpBeerProviderTest {
     fun test_getBeers_error() = runBlocking {
         val sut = makeSUT(punkApiService)
 
-        whenever(punkApiService.getRockets()).thenReturn(Response.error(404, ResponseBody.create(null, "")))
+        whenever(punkApiService.getRockets()).thenReturn(
+            Response.error(
+                404,
+                ResponseBody.create(null, "")
+            )
+        )
 
         val beers = sut.getBeers()
 

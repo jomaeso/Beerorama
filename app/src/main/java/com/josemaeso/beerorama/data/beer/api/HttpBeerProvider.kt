@@ -1,15 +1,17 @@
 package com.josemaeso.beerorama.data.beer.api
 
-import android.text.TextUtils
 import com.josemaeso.beerorama.domain.beer.Beer
 import com.josemaeso.beerorama.domain.beer.BeerMapper
 import com.josemaeso.beerorama.domain.beer.BeerProvider
 
-class HttpBeerProvider(private val apiService: PunkApiService, private val mapper: BeerMapper) : BeerProvider {
+class HttpBeerProvider(private val apiService: PunkApiService, private val mapper: BeerMapper) :
+    BeerProvider {
     override suspend fun getBeers(filter: String?): List<Beer> {
-        val response =  if( filter != null && filter.isNotEmpty()) {
+        val response = if (filter != null && filter.isNotEmpty()) {
             apiService.filterRockets(filter)
-        } else { apiService.getRockets() }
+        } else {
+            apiService.getRockets()
+        }
 
         if (response.isSuccessful) {
             response.body()?.let {
