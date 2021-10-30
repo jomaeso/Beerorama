@@ -29,11 +29,11 @@ class HttpBeerProviderTest {
         )
         val sut = makeSUT(punkApiService)
 
-        whenever(punkApiService.getRockets()).thenReturn(Response.success(remoteBeers))
+        whenever(punkApiService.getBeers()).thenReturn(Response.success(remoteBeers))
 
         val beers = sut.getBeers()
 
-        verify(punkApiService, times(1)).getRockets()
+        verify(punkApiService, times(1)).getBeers()
         assertEquals(remoteBeers.map { it.id }, beers.map { it.id })
     }
 
@@ -46,11 +46,11 @@ class HttpBeerProviderTest {
         val filter = "beer"
         val sut = makeSUT(punkApiService)
 
-        whenever(punkApiService.filterRockets(filter)).thenReturn(Response.success(remoteBeers))
+        whenever(punkApiService.filterBeers(filter)).thenReturn(Response.success(remoteBeers))
 
         val beers = sut.getBeers(filter = filter)
 
-        verify(punkApiService, times(1)).filterRockets(filter)
+        verify(punkApiService, times(1)).filterBeers(filter)
         assertEquals(remoteBeers.map { it.id }, beers.map { it.id })
     }
 
@@ -58,11 +58,11 @@ class HttpBeerProviderTest {
     fun test_getBeers_successEmpty() = runBlocking {
         val sut = makeSUT(punkApiService)
 
-        whenever(punkApiService.getRockets()).thenReturn(Response.success(emptyList()))
+        whenever(punkApiService.getBeers()).thenReturn(Response.success(emptyList()))
 
         val beers = sut.getBeers()
 
-        verify(punkApiService, times(1)).getRockets()
+        verify(punkApiService, times(1)).getBeers()
         assertTrue(beers.isEmpty())
     }
 
@@ -70,7 +70,7 @@ class HttpBeerProviderTest {
     fun test_getBeers_error() = runBlocking {
         val sut = makeSUT(punkApiService)
 
-        whenever(punkApiService.getRockets()).thenReturn(
+        whenever(punkApiService.getBeers()).thenReturn(
             Response.error(
                 404,
                 ResponseBody.create(null, "")
@@ -79,7 +79,7 @@ class HttpBeerProviderTest {
 
         val beers = sut.getBeers()
 
-        verify(punkApiService, times(1)).getRockets()
+        verify(punkApiService, times(1)).getBeers()
         assertTrue(beers.isEmpty())
     }
 

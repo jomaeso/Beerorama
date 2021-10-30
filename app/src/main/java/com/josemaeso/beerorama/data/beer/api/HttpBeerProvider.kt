@@ -8,9 +8,9 @@ class HttpBeerProvider(private val apiService: PunkApiService, private val mappe
     BeerProvider {
     override suspend fun getBeers(filter: String?): List<Beer> {
         val response = if (filter != null && filter.isNotEmpty()) {
-            apiService.filterRockets(filter)
+            apiService.filterBeers(filter)
         } else {
-            apiService.getRockets()
+            apiService.getBeers()
         }
 
         if (response.isSuccessful) {
