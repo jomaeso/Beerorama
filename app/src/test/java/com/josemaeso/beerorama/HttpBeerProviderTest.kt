@@ -2,11 +2,11 @@ package com.josemaeso.beerorama
 
 import com.josemaeso.beerorama.data.beer.api.HttpBeerProvider
 import com.josemaeso.beerorama.data.beer.api.PunkApiService
+import com.josemaeso.beerorama.data.beer.api.RemoteApiBeer
 import com.josemaeso.beerorama.domain.beer.BeerMapper
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -81,6 +81,41 @@ class HttpBeerProviderTest {
 
         verify(punkApiService, times(1)).getBeers()
         assertTrue(beers.isEmpty())
+    }
+
+    @Test
+    fun test_getBeer_success() = runBlocking {
+        val sut = makeSUT(punkApiService)
+        val beerId = 123456
+        val beerDetail = listOf(BeerProviderTestUtils.createRemoteBeer(id = beerId))
+        whenever(punkApiService.getBeer(beerId)).thenReturn( Response.success(beerDetail))
+
+        val beer = sut.getBeer(beerId)
+
+        assertEquals(beerId, beer?.id)
+    }
+
+    @Test
+    fun test_getBeer_empty() = runBlocking {
+        val sut = makeSUT(punkApiService)
+        val beerId = 123456
+        val beerDetail = emptyList<RemoteApiBeer>()
+        whenever(punkApiService.getBeer(beerId)).thenReturn( Response.success(beerDetail))
+
+        val beer = sut.getBeer(beerId)
+
+        assertNull(beer)
+    }
+
+    @Test
+    fun test_getBeer_error() = runBlocking {
+        val sut = makeSUT(punkApiService)
+        val beerId = 123456
+        whenever(punkApiService.getBeer(beerId)).thenReturn( Response.error(404, ResponseBody.create(null, "")))
+
+        val beer = sut.getBeer(beerId)
+
+        assertNull(beer)
     }
 
     private fun makeSUT(punkApiService: PunkApiService): HttpBeerProvider {
