@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.josemaeso.beerorama.BeeroramaApplication
 import com.josemaeso.beerorama.R
+import com.josemaeso.beerorama.domain.beer.Beer
 import kotlinx.android.synthetic.main.search_beer_fragment.*
 
-class SearchBeerFragment : Fragment() {
+class SearchBeerFragment : Fragment(), BeerListAdapter.BeerClickListener {
 
     private val viewModel: SearchBeerViewModel by viewModels { SearchBeerViewModelFactory((activity?.application as BeeroramaApplication).beerProvider) }
-    private val beerAdapter = BeerListAdapter()
+    private val beerAdapter = BeerListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,16 @@ class SearchBeerFragment : Fragment() {
         viewModel.beersLiveData.observe(viewLifecycleOwner) {
             beerAdapter.submitList(it)
         }
+        viewModel.navigateDetailEvent.observe(viewLifecycleOwner) {
+            it?.getContentIfNotHandled()?.let { beer ->
+                val action =SearchBeerFragmentDirections.actionSearchBeerFragmentToDetailBeerFragment(beer.id, beer.name)
+                findNavController().navigate(action)
+            }
+        }
+    }
+
+    override fun onBeerClick(beer: Beer) {
+        viewModel.selectBeer(beer)
     }
 
 }
