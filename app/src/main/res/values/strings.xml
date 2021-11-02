@@ -2,4 +2,8 @@
     <string name="app_name">Beerorama</string>
     <string name="search_beer_search_hint">Search Beer</string>
     <string name="abv_label">%1$.2f%% ABV</string>
+    <string name="beer_detail_description_title">Description:</string>
+    <string name="beer_detail_abv_title">ABV:</string>
+    <string name="beer_detail_tagline_title">Tagline:</string>
+    <string name="beer_detail_image_content_description">Image of the beer</string>
 </resources>
