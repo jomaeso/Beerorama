@@ -8,12 +8,16 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.josemaeso.beerorama.R
-import com.squareup.picasso.Picasso
+import com.josemaeso.beerorama.ui.loader.UIImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_beer_fragment.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailBeerFragment : Fragment() {
+
+    @Inject
+    lateinit var imageLoader: UIImageLoader
     private val viewModel: DetailBeerViewModel by viewModels()
 
     override fun onCreateView(
@@ -34,9 +38,7 @@ class DetailBeerFragment : Fragment() {
                 abv.text = getString(R.string.abv_label, beer.abv)
 
                 beer.imageUrl?.let { imageUrl ->
-                    Picasso.get().load(imageUrl)
-                        .placeholder(R.drawable.beer_place_holder).fit().centerCrop()
-                        .into(image)
+                    imageLoader.loadImage(imageUrl, image, R.drawable.beer_place_holder)
                 }
                 progress_bar.isVisible = false
                 beer_detail_container.isVisible = true

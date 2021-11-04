@@ -4,6 +4,8 @@ import com.josemaeso.beerorama.data.beer.api.BeerMapper
 import com.josemaeso.beerorama.data.beer.api.HttpBeerProvider
 import com.josemaeso.beerorama.data.beer.api.PunkApiService
 import com.josemaeso.beerorama.domain.beer.BeerProvider
+import com.josemaeso.beerorama.ui.loader.PicassoImageLoader
+import com.josemaeso.beerorama.ui.loader.UIImageLoader
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +21,12 @@ class AppModule {
     @Singleton
     fun beerProvider(): BeerProvider {
         return HttpBeerProvider(apiServiceProvider(), BeerMapper())
+    }
+
+    @Provides
+    @Singleton
+    fun imageLoaderProvider(): UIImageLoader {
+        return PicassoImageLoader()
     }
 
     private fun apiServiceProvider(): PunkApiService {
