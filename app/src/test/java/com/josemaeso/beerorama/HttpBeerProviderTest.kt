@@ -3,7 +3,7 @@ package com.josemaeso.beerorama
 import com.josemaeso.beerorama.data.beer.api.HttpBeerProvider
 import com.josemaeso.beerorama.data.beer.api.PunkApiService
 import com.josemaeso.beerorama.data.beer.api.RemoteApiBeer
-import com.josemaeso.beerorama.domain.beer.BeerMapper
+import com.josemaeso.beerorama.data.beer.api.BeerMapper
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.*

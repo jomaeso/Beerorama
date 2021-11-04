@@ -7,21 +7,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
-import com.josemaeso.beerorama.BeeroramaApplication
 import com.josemaeso.beerorama.R
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.detail_beer_fragment.*
-import kotlinx.android.synthetic.main.detail_beer_fragment.view.*
 
+@AndroidEntryPoint
 class DetailBeerFragment : Fragment() {
-    private val args: DetailBeerFragmentArgs by navArgs()
-    private val viewModel: DetailBeerViewModel by viewModels {
-        DetailBeerViewModelFactory(
-            args.beerId,
-            (activity?.application as BeeroramaApplication).beerProvider
-        )
-    }
+    private val viewModel: DetailBeerViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

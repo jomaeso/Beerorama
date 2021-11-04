@@ -1,6 +1,6 @@
-package com.josemaeso.beerorama.domain.beer
+package com.josemaeso.beerorama.data.beer.api
 
-import com.josemaeso.beerorama.data.beer.api.RemoteApiBeer
+import com.josemaeso.beerorama.domain.beer.Beer
 
 class BeerMapper {
     fun remoteToDomain(remoteApiBeer: RemoteApiBeer): Beer {
