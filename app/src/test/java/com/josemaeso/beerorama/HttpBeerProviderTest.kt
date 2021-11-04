@@ -7,6 +7,7 @@ import com.josemaeso.beerorama.data.beer.api.BeerMapper
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -20,6 +21,12 @@ import retrofit2.Response
 class HttpBeerProviderTest {
     @Mock
     private lateinit var punkApiService: PunkApiService
+    private lateinit var sut: HttpBeerProvider
+
+    @Before
+    fun setup() {
+        sut = HttpBeerProvider(punkApiService, BeerMapper())
+    }
 
     @Test
     fun test_getBeers_successNotEmpty() = runBlocking {
@@ -27,8 +34,6 @@ class HttpBeerProviderTest {
             BeerProviderTestUtils.createRemoteBeer(),
             BeerProviderTestUtils.createRemoteBeer()
         )
-        val sut = makeSUT(punkApiService)
-
         whenever(punkApiService.getBeers()).thenReturn(Response.success(remoteBeers))
 
         val beers = sut.getBeers()
@@ -44,7 +49,6 @@ class HttpBeerProviderTest {
             BeerProviderTestUtils.createRemoteBeer()
         )
         val filter = "beer"
-        val sut = makeSUT(punkApiService)
 
         whenever(punkApiService.filterBeers(filter)).thenReturn(Response.success(remoteBeers))
 
@@ -56,8 +60,6 @@ class HttpBeerProviderTest {
 
     @Test
     fun test_getBeers_successEmpty() = runBlocking {
-        val sut = makeSUT(punkApiService)
-
         whenever(punkApiService.getBeers()).thenReturn(Response.success(emptyList()))
 
         val beers = sut.getBeers()
@@ -68,8 +70,6 @@ class HttpBeerProviderTest {
 
     @Test
     fun test_getBeers_error() = runBlocking {
-        val sut = makeSUT(punkApiService)
-
         whenever(punkApiService.getBeers()).thenReturn(
             Response.error(
                 404,
@@ -85,10 +85,9 @@ class HttpBeerProviderTest {
 
     @Test
     fun test_getBeer_success() = runBlocking {
-        val sut = makeSUT(punkApiService)
         val beerId = 123456
         val beerDetail = listOf(BeerProviderTestUtils.createRemoteBeer(id = beerId))
-        whenever(punkApiService.getBeer(beerId)).thenReturn( Response.success(beerDetail))
+        whenever(punkApiService.getBeer(beerId)).thenReturn(Response.success(beerDetail))
 
         val beer = sut.getBeer(beerId)
 
@@ -97,10 +96,9 @@ class HttpBeerProviderTest {
 
     @Test
     fun test_getBeer_empty() = runBlocking {
-        val sut = makeSUT(punkApiService)
         val beerId = 123456
         val beerDetail = emptyList<RemoteApiBeer>()
-        whenever(punkApiService.getBeer(beerId)).thenReturn( Response.success(beerDetail))
+        whenever(punkApiService.getBeer(beerId)).thenReturn(Response.success(beerDetail))
 
         val beer = sut.getBeer(beerId)
 
@@ -109,16 +107,16 @@ class HttpBeerProviderTest {
 
     @Test
     fun test_getBeer_error() = runBlocking {
-        val sut = makeSUT(punkApiService)
         val beerId = 123456
-        whenever(punkApiService.getBeer(beerId)).thenReturn( Response.error(404, ResponseBody.create(null, "")))
+        whenever(punkApiService.getBeer(beerId)).thenReturn(
+            Response.error(
+                404,
+                ResponseBody.create(null, "")
+            )
+        )
 
         val beer = sut.getBeer(beerId)
 
         assertNull(beer)
-    }
-
-    private fun makeSUT(punkApiService: PunkApiService): HttpBeerProvider {
-        return HttpBeerProvider(punkApiService, BeerMapper())
     }
 }
