@@ -41,7 +41,7 @@ class DetailBeerFragment : Fragment() {
                     imageLoader.loadImage(imageUrl, image, R.drawable.beer_place_holder)
                 }
                 progress_bar.isVisible = false
-                beer_detail_container.isVisible = true
+                beer_content_group.isVisible = true
             }
         }
     }
