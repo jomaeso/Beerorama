@@ -1,7 +1,6 @@
 package com.josemaeso.beerorama.data.beer.api
 
 import com.josemaeso.beerorama.domain.beer.Beer
-import com.josemaeso.beerorama.domain.beer.BeerMapper
 import com.josemaeso.beerorama.domain.beer.BeerProvider
 
 class HttpBeerProvider(private val apiService: PunkApiService, private val mapper: BeerMapper) :
